@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDoLister | Gestor de Tareas Profesional</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Estilos Personalizados -->
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-tasks"></i> ToDoLister
+      </a>
+      <button id="darkThemeButton" class="theme-toggle" onclick="toggleTheme(event)">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    <div class="row g-4">
+      <!-- New Task Form -->
+      <div class="col-lg-4 col-md-12 mb-4">
+        <div class="card h-100">
+          <div class="card-header">
+            <i class="fas fa-plus-circle me-2"></i> Nueva Tarea
+          </div>
+          <div class="card-body">
+            <form th:action="@{/tasks/save}" method="post">
+              <div class="mb-3">
+                <label for="taskTitle" class="form-label">Título:</label>
+                <input type="text" class="form-control" id="taskTitle" name="title" required 
+                       placeholder="¿Qué necesitas hacer?">
+              </div>
+
+              <div class="mb-3">
+                <label for="taskDescription" class="form-label">Descripción:</label>
+                <textarea class="form-control" id="taskDescription" name="description" rows="3"
+                          placeholder="Añade detalles sobre esta tarea..."></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="dueDate" class="form-label">Fecha de vencimiento:</label>
+                <input type="date" class="form-control" id="dueDate" name="dueDate">
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-plus me-2"></i> Añadir Tarea
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tasks List -->
+      <div class="col-lg-8 col-md-12">
+        <h2 class="section-title">
+          <i class="fas fa-clipboard-list"></i> Mis Tareas
+        </h2>
+
+        <!-- Filtros de tareas -->
+        <div class="task-filters">
+          <button class="filter-btn active" data-filter="all">Todas</button>
+          <button class="filter-btn" data-filter="pending">Pendientes</button>
+          <button class="filter-btn" data-filter="completed">Completadas</button>
+        </div>
+      
+        <!-- Actual Tasks -->
+        <div th:if="${tasks != null and not #lists.isEmpty(tasks)}" class="task-container">
+          <div th:each="task, status : ${tasks}" th:classappend="${task.completed} ? 'task-completed' : ''" class="task-item" th:data-completed="${task.completed}">
+            <div class="task-card">
+              <div class="task-card-body">
+                <div class="task-content">
+                  <div class="task-title">
+                    <span th:text="${status.count}">1</span>.
+                    <span th:text="${task.title}">(Título)</span>
+                    <span class="task-due-date" th:if="${task.dueDate}">
+                      <i class="far fa-calendar-alt me-1"></i>
+                      <span th:text="${task.dueDate}">(fecha)</span>
+                    </span>
+                  </div>
+                  <p class="task-description" th:text="${task.description}">(Descripción)</p>
+                </div>
+                <div class="task-actions">
+                  <form th:action="@{'/tasks/toggle/'+${task.id}}" method="post">
+                    <button type="submit" class="action-btn action-btn-complete">
+                      <i th:class="${task.completed} ? 'fas fa-undo' : 'fas fa-check'"></i>
+                    </button>
+                  </form>
+                  <form th:action="@{'/tasks/delete/'+${task.id}}" method="post">
+                    <button type="submit" class="action-btn action-btn-delete">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div th:if="${tasks == null or #lists.isEmpty(tasks)}" class="empty-state task-card">
+          <i class="far fa-smile"></i>
+          <p class="empty-state-text">¡No hay tareas pendientes! Añade una nueva tarea para comenzar.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <!-- Script personalizado -->
+  <script th:src="@{/js/app.js}"></script>
+</body>
+</html>
