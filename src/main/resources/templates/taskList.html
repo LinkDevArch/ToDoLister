@@ -32,30 +32,30 @@
       <div class="col-lg-4 col-md-12 mb-4">
         <div class="card h-100">
           <div class="card-header">
-            <i class="fas fa-plus-circle me-2"></i> Nueva Tarea
+            <i class="fas fa-plus-circle me-2"></i> New Task
           </div>
           <div class="card-body">
             <form th:action="@{/tasks/save}" method="post">
               <div class="mb-3">
-                <label for="taskTitle" class="form-label">Título:</label>
+                <label for="taskTitle" class="form-label">Title:</label>
                 <input type="text" class="form-control" id="taskTitle" name="title" required 
-                       placeholder="¿Qué necesitas hacer?">
+                       placeholder="What do you need to do?">
               </div>
 
               <div class="mb-3">
-                <label for="taskDescription" class="form-label">Descripción:</label>
+                <label for="taskDescription" class="form-label">Description:</label>
                 <textarea class="form-control" id="taskDescription" name="description" rows="3"
-                          placeholder="Añade detalles sobre esta tarea..."></textarea>
+                          placeholder="Add details about this task..."></textarea>
               </div>
 
               <div class="mb-3">
-                <label for="dueDate" class="form-label">Fecha de vencimiento:</label>
+                <label for="dueDate" class="form-label">Due date</label>
                 <input type="date" class="form-control" id="dueDate" name="dueDate">
               </div>
 
               <div class="d-grid">
                 <button type="submit" class="btn btn-primary">
-                  <i class="fas fa-plus me-2"></i> Añadir Tarea
+                  <i class="fas fa-plus me-2"></i> Add task
                 </button>
               </div>
             </form>
@@ -66,14 +66,14 @@
       <!-- Tasks List -->
       <div class="col-lg-8 col-md-12">
         <h2 class="section-title">
-          <i class="fas fa-clipboard-list"></i> Mis Tareas
+          <i class="fas fa-clipboard-list"></i> My Tasks
         </h2>
 
         <!-- Filtros de tareas -->
         <div class="task-filters">
-          <button class="filter-btn active" data-filter="all">Todas</button>
-          <button class="filter-btn" data-filter="pending">Pendientes</button>
-          <button class="filter-btn" data-filter="completed">Completadas</button>
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="pending">Pending</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
         </div>
       
         <!-- Actual Tasks -->
@@ -84,13 +84,13 @@
                 <div class="task-content">
                   <div class="task-title">
                     <span th:text="${status.count}">1</span>.
-                    <span th:text="${task.title}">(Título)</span>
+                    <span th:text="${task.title}">(Title)</span>
                     <span class="task-due-date" th:if="${task.dueDate}">
                       <i class="far fa-calendar-alt me-1"></i>
-                      <span th:text="${task.dueDate}">(fecha)</span>
+                      <span th:text="${task.dueDate}">(Date)</span>
                     </span>
                   </div>
-                  <p class="task-description" th:text="${task.description}">(Descripción)</p>
+                  <p class="task-description" th:text="${task.description}">(Description)</p>
                 </div>
                 <div class="task-actions">
                   <form th:action="@{'/tasks/toggle/'+${task.id}}" method="post">
@@ -112,7 +112,7 @@
         <!-- Empty State -->
         <div th:if="${tasks == null or #lists.isEmpty(tasks)}" class="empty-state task-card">
           <i class="far fa-smile"></i>
-          <p class="empty-state-text">¡No hay tareas pendientes! Añade una nueva tarea para comenzar.</p>
+          <p class="empty-state-text">No pending tasks! Add a new task to start.</p>
         </div>
       </div>
     </div>
