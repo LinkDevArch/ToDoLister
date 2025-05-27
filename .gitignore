@@ -67,6 +67,7 @@ Thumbs.db
 
 # Si usás Maven
 .mvn/
+.mvn/wrapper/
 
 # Archivos de cache
 **/.classpath
