@@ -31,3 +31,49 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Archivos de compilación
+/target/
+/build/
+
+# Archivos de logs
+*.log
+
+# Archivos temporales del sistema
+*.class
+*.jar
+*.war
+*.hprof
+*.DS_Store
+
+# Configuración de IntelliJ
+.idea/
+
+# Configuración de VSCode
+
+# Archivos del sistema operativo
+Thumbs.db
+.DS_Store
+
+# Archivos de entorno
+.env
+
+# Archivos de pruebas temporales
+/test-output/
+/out/
+
+# Carpeta de dependencias si usás Gradle Wrapper
+.gradle/
+
+# Si usás Maven
+.mvn/
+
+# Archivos de cache
+**/.classpath
+**/.project
+**/.settings
+**/.factorypath
+
+# node_modules si combinás frontend con Spring Boot
+node_modules/
+
